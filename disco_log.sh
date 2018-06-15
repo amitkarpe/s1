@@ -1,5 +1,6 @@
 #!/bin/bash
 
+version=0.1
 f=vd6563.1.log
 
 
@@ -17,8 +18,8 @@ grep -e '-- Object #' $f | awk {'print $5'} | paste -sd+ | bc
 grep -i -e "--- Working on plugin 'Cisco ACI'" -e "Discovery of plugin 'Cisco ACI'" 51_disco.log
 
 
-plugin_name="SNMP Poller"; grep -i -e "--- Working on plugin '$plugin_name'" -e "Discovery of plugin '$plugin_name'" -n $f 
-plugin_name="VMware Poller"; grep -i -e "--- Working on plugin '$plugin_name'" -e "Discovery of plugin '$plugin_name'" -n $f 
+plugin_name="SNMP Poller"; grep -i -e "--- Working on plugin '$plugin_name'" -e "Discovery of plugin '$plugin_name'" -n $f
+plugin_name="VMware Poller"; grep -i -e "--- Working on plugin '$plugin_name'" -e "Discovery of plugin '$plugin_name'" -n $f
 
 grep -i -E 'The object|-- Object #' $f
 grep -E 'The object|-- Object #|Retrieved \? indicators' 51_disco.log
