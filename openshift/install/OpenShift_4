@@ -1,0 +1,76 @@
+10.168.119.110    OpenShift4 os4 # 3.5
+
+Worked ==> https://www.youtube.com/watch?v=aqXSbDZggK4
+
+hostnamectl set-hostname OS_3-5-5;
+yum update --assumeyes && \
+yum install vim tmux nano unzip traceroute wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct docker ansible php php-pear --assumeyes && \
+systemctl reboot
+
+# ifconfig.co
+
+https://github.com/gshipley/installcentos
+
+#wget https://access.cdn.redhat.com//content/origin/files/sha256/5b/5b6b4152d7e874d550b192287c0c46666167aaf3d02da08f35dbb537e8c2ba98/oc-3.5.5.31.67-linux.tar.gz?_auth_=1527153619_30c50c228be30f66b5f6169c8951b6f6
+#https://mirror.openshift.com/pub/openshift-v3/clients/3.5.5.31.67/linux/
+https://mirror.openshift.com/pub/openshift-v3/clients/3.6.173.0.125/linux/
+#wget https://mirror.openshift.com/pub/openshift-v3/clients/3.5.5.31.67/linux/oc.tar.gz
+wget https://mirror.openshift.com/pub/openshift-v3/clients/3.6.173.0.125/linux/oc.tar.gz
+tar zxvf oc.tar.gz; cp oc /usr/local/bin/; chmod +x /usr/local/bin/
+
+git clone https://github.com/gshipley/installcentos.git
+
+cd /root/installcentos
+
+export INTERACTIVE=true;
+export DOMAIN=${DOMAIN:="sevone.com"}
+export USERNAME=admin
+export PASSWORD=1
+export VERSION=${VERSION:="3.6.0"}
+
+
+# OpenShift v3.5 Linux Client (v. 3.5.5.31.67 for x86_64)
+wget https://access.cdn.redhat.com//content/origin/files/sha256/5b/5b6b4152d7e874d550b192287c0c46666167aaf3d02da08f35dbb537e8c2ba98/oc-3.5.5.31.67-linux.tar.gz?_auth_=1527153619_30c50c228be30f66b5f6169c8951b6f6
+mv oc-3.5*  oc-3.5-linux.tar.gz                  ; tar zxvf oc-*; cp oc /usr/local/bin/; chmod +x /usr/local/bin/
+
+git clone https://github.com/gshipley/installcentos.git
+
+./install-openshift.sh
+
+oc login -u support -p support https://console.support.nip.io:8443/
+
+#oc login -u root -p password https://console.38.98.198.34.nip.io:8443/
+https://console.38.98.198.34.nip.io:8443/
+https://10.168.116.90:8443/
+https://10.168.116.90:8443/console/
+
+
+oc login -u admin -p 1 https://os_3-5-5:8443
+
+oc login -u admin -p 1 https://os_3-5-5.sevone.com:8443
+
+htpasswd -b /etc/origin/master/htpasswd admin 1
+oc adm policy add-cluster-role-to-user cluster-admin admin
+#oc login -u admin -p 1 https://10.168.116.90:8443
+#oc login -u admin -p 1 https://os_3-5-5:8443
+oc login -u admin -p 1 https://console4:8443
+oc login -u admin -p 1 https://10.168.119.110:8443 --loglevel=9
+
+fatal: [10.168.119.110 -> 10.168.119.110]: FAILED! => {"attempts": 50, "changed": false, "results": {"cmd": "/usr/local/bin/oc get node os_3-5-5 -o json -n default", "results": [{}], "returncode": 0, "stderr": "Error from server (NotFound): nodes \"os_3-5-5\" not found\n", "stdout": ""}, "state": "list"}
+        to retry, use: --limit @/root/installcentos/openshift-ansible/playbooks/deploy_cluster.retry
+PLAY RECAP *******************************************************************************************************************************************************************************************************************************
+10.168.119.110             : ok=385  changed=119  unreachable=0    failed=1
+localhost                  : ok=13   changed=0    unreachable=0    failed=0
+INSTALLER STATUS *************************************************************************************************************************************************************************************************************************
+Initialization             : Complete (0:00:31)
+Health Check               : Complete (0:00:02)
+etcd Install               : Complete (0:01:08)
+Master Install             : Complete (0:03:48)
+Master Additional Install  : Complete (0:01:03)
+Node Install               : In Progress (0:08:36)
+        This phase can be restarted by running: playbooks/openshift-node/config.yml
+Failure summary:
+  1. Hosts:    10.168.119.110
+     Play:     Additional node config
+     Task:     Wait for Node Registration
+     Message:  Failed without returning a message.

@@ -1,0 +1,54 @@
+10.168.117.123  OpenShift2 os5 # 3.9
+
+Worked ==> https://www.youtube.com/watch?v=aqXSbDZggK4
+
+console5.sevone.com
+
+hostnamectl set-hostname console5;yum update --assumeyes && \
+yum install vim tmux nano unzip traceroute wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct docker ansible php php-pear --assumeyes && \
+systemctl reboot
+
+# ifconfig.co
+
+https://github.com/gshipley/installcentos
+
+#wget https://access.cdn.redhat.com//content/origin/files/sha256/5b/5b6b4152d7e874d550b192287c0c46666167aaf3d02da08f35dbb537e8c2ba98/oc-3.5.5.31.67-linux.tar.gz?_auth_=1527153619_30c50c228be30f66b5f6169c8951b6f6
+# https://mirror.openshift.com/pub/openshift-v3/clients/3.9.31/
+wget https://mirror.openshift.com/pub/openshift-v3/clients/3.9.31/linux/oc.tar.gz
+tar zxvf oc.tar.gz; cp oc /usr/local/bin/; chmod +x /usr/local/bin/
+
+git clone https://github.com/gshipley/installcentos.git
+
+cd /root/installcentos
+
+export INTERACTIVE=true;
+export DOMAIN=${DOMAIN:="sevone.com"}
+export USERNAME=admin
+export PASSWORD=1
+
+./install-openshift.sh
+
+oc login -u admin -p 1 https://console.sevone.com:8443/
+
+https://OS_3-9:8443/console/
+https://OS_3-9.sevone.com:8443/console/
+oc login -u admin -p 123456 https://10.168.117.123:8443  --loglevel=9
+
+ansible-playbook -i inventory.ini openshift-ansible/playbooks/prerequisites.yml
+ansible-playbook -i inventory.ini openshift-ansible/playbooks/deploy_cluster.yml
+
+ansible-playbook -i inventory.ini openshift-ansible/playbooks/openshift-master/config.yml
+
+
+htpasswd -c -b /etc/origin/master/htpasswd admin 1
+
+
+openshift_public_hostname=console5.sevone.com
+openshift_router_selector='region=infra'
+openshift_registry_selector='region=infra'
+
+
+10.168.116.200 openshift_schedulable=true openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+
+
+no nodes available to schedule pods
